@@ -106,6 +106,8 @@ arch_chroot 'pacman -U --noconfirms /tmp/packer*xz'
 # wifi-meun
 arch_chroot "pacman -S wifi-menu --noconfirm"
 arch_chroot "pacman -S dialog --noconfirm"
+arch_chroot "pacman -S wpa_supplicant --noconfirm"
+
 # swap
 arch_chroot "fallocate -l $ARCH_SWAP_SIZE /swapfile"
 arch_chroot "mkswap /swapfile"
