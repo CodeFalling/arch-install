@@ -90,6 +90,11 @@ arch_chroot 'grub-mkconfig -o /boot/grub/grub.cfg'
 arch_chroot "grub-install $ARCH_TARGET_DEV"
 sleep 2
 
+# packer
+arch_chroot 'curl https://aur.archlinux.org/packages/pa/packer/PKGBUILD>/tmp/PKGBUILD'
+arch_chroot 'makepkg -s --asroot --noconfirms /tmp/'
+arch_chroot 'pacman -U --noconfirms /tmp/packer*xz'
+
 #rm $ARCH_ROOT/vbox_arch_chroot.sh
 umount $ARCH_ROOT/
 reboot
