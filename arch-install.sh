@@ -35,6 +35,7 @@ msg (){
 
 #}}}
 
+msg "Archlinux is coming"
 # file system
 mkfs -t ext4  $ARCH_TARGET_ROOT
 
@@ -43,7 +44,7 @@ mount $ARCH_TARGET_ROOT $ARCH_ROOT
 
 # pacman base
 pacstrap -i $ARCH_ROOT base base-devel grub-bios
-msg("Base System Installed")
+msg "Base System Installed"
 sleep 2
 
 # fstab
@@ -95,7 +96,7 @@ arch_chroot 'os-prober'
 arch_chroot 'grub-mkconfig -o /boot/grub/grub.cfg'
 arch_chroot "grub-install $ARCH_TARGET_DEV"
 sleep 2
-msg ("Install packer..")
+msg  "Install packer.." 
 # packer
 arch_chroot 'curl https://aur.archlinux.org/packages/pa/packer/PKGBUILD>/tmp/PKGBUILD'
 arch_chroot 'makepkg -s --asroot --noconfirms /tmp/'
@@ -103,6 +104,6 @@ arch_chroot 'pacman -U --noconfirms /tmp/packer*xz'
 
 #rm $ARCH_ROOT/vbox_arch_chroot.sh
 umount $ARCH_ROOT/
-msg("All done")
+msg "All done!Enjoy it."
 #reboot
 
