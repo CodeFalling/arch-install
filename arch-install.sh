@@ -19,6 +19,7 @@ ARCH_NEW_USER_NAME=user
 
 ARCH_NEW_USER_PASSWORD=user
 
+ARCH_SWAP_SIZE=1024M
 #-----------------------------------------------------------------------------
 
 set -x # Show the message of each command
@@ -101,6 +102,11 @@ msg  "Install packer.."
 arch_chroot 'curl https://aur.archlinux.org/packages/pa/packer/PKGBUILD>/tmp/PKGBUILD'
 arch_chroot 'makepkg -s --asroot --noconfirms /tmp/'
 arch_chroot 'pacman -U --noconfirms /tmp/packer*xz'
+
+# swap
+arch_chroot "fallocate -l $ARCH_SWAP_SIZE /swapfile"
+arch_chroot "mkswap /swapfile"
+arch_chroot "swapon /swapfile"
 
 #rm $ARCH_ROOT/vbox_arch_chroot.sh
 umount $ARCH_ROOT/
