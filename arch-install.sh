@@ -38,7 +38,7 @@ mkfs -t ext4  $ARCH_TARGET_ROOT
 mount $ARCH_TARGET_ROOT $ARCH_ROOT
 
 # pacman base
-pacstrap -i $ARCH_ROOT base-devel grub-bios
+pacstrap -i $ARCH_ROOT base base-devel grub-bios
 sleep 2
 
 # fstab
@@ -50,7 +50,7 @@ arch_chroot 'hwclock --systohc --utc'
 sleep 2
 
 # Set hostname
-arch_chroot 'echo $ARCH_HOSTNAME > /etc/hostname'
+arch_chroot "echo $ARCH_HOSTNAME > /etc/hostname"
 sleep 2
 
 # DHCP start
@@ -72,10 +72,9 @@ arch_chroot 'locale-gen'
 sleep 2
 
 # users and passwd
-arch_chroot 'useradd -m -G users,wheel -s /bin/bash $ARCH_NEW_USER_NAME'
-arch_chroot 'echo "$ARCH_NEW_USER_NAME:$ARCH_NEW_USER_PASSWORD" > 
-passwd.txt'
-arch_chroot 'echo "root:ARCH_ROOT_PASSWORD" >> passwd.txt'
+arch_chroot "useradd -m -G users,wheel -s /bin/bash $ARCH_NEW_USER_NAME"
+arch_chroot "echo '$ARCH_NEW_USER_NAME:$ARCH_NEW_USER_PASSWORD' > passwd.txt"
+arch_chroot "echo 'root:$ARCH_ROOT_PASSWORD' >> passwd.txt"
 arch_chroot 'chpasswd < passwd.txt'
 arch_chroot 'rm passwd.txt'
 sleep 2
@@ -85,10 +84,10 @@ arch_chroot 'mkinitcpio -p linux'
 sleep 2
 
 # grub
-arch_chroot 'pacman -S os-prober'
+arch_chroot 'pacman -S os-prober --noconfirm'
 arch_chroot 'os-prober'
 arch_chroot 'grub-mkconfig -o /boot/grub/grub.cfg'
-arch_chroot 'grub-install $ARCH_TARGET_DEV'
+arch_chroot "grub-install $ARCH_TARGET_DEV"
 sleep 2
 
 #rm $ARCH_ROOT/vbox_arch_chroot.sh
