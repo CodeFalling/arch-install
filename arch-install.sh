@@ -38,7 +38,7 @@ mkfs -t ext4  $ARCH_TARGET_ROOT
 mount $ARCH_TARGET_ROOT $ARCH_ROOT
 
 # pacman base
-pacstrap -i $ARCH_ROOT base grub-bios
+pacstrap -i $ARCH_ROOT base-devel grub-bios
 sleep 2
 
 # fstab
@@ -72,7 +72,7 @@ arch_chroot 'locale-gen'
 sleep 2
 
 # users and passwd
-arch_chroot 'useradd -m -G users,wheel -s /bin/bash freeman'
+arch_chroot 'useradd -m -G users,wheel -s /bin/bash $ARCH_NEW_USER_NAME'
 arch_chroot 'echo "$ARCH_NEW_USER_NAME:$ARCH_NEW_USER_PASSWORD" > 
 passwd.txt'
 arch_chroot 'echo "root:ARCH_ROOT_PASSWORD" >> passwd.txt'
@@ -85,6 +85,8 @@ arch_chroot 'mkinitcpio -p linux'
 sleep 2
 
 # grub
+arch_chroot 'pacman -S os-prober'
+arch_chroot 'os-prober'
 arch_chroot 'grub-mkconfig -o /boot/grub/grub.cfg'
 arch_chroot 'grub-install $ARCH_TARGET_DEV'
 sleep 2
