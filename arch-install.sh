@@ -42,7 +42,7 @@ mkfs -t ext4  $ARCH_TARGET_ROOT
 
 # mount file system
 mount $ARCH_TARGET_ROOT $ARCH_ROOT
-
+nano /etc/pacman.d/mirrorlist
 # pacman base
 pacstrap -i $ARCH_ROOT base base-devel grub-bios
 msg "Base System Installed"
