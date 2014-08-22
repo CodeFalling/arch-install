@@ -99,9 +99,10 @@ arch_chroot "grub-install $ARCH_TARGET_DEV"
 sleep 2
 msg  "Install packer.." 
 # packer
+arch_chroot 'cd /tmp'
 arch_chroot 'curl https://aur.archlinux.org/packages/pa/packer/PKGBUILD>/tmp/PKGBUILD'
-arch_chroot 'makepkg -s --asroot --noconfirms /tmp/'
-arch_chroot 'pacman -U --noconfirms /tmp/packer*xz'
+arch_chroot 'makepkg -s --asroot --noconfirms'
+arch_chroot 'pacman -U --noconfirms packer*xz'
 
 # wifi-meun
 arch_chroot "pacman -S wifi-menu --noconfirm"
